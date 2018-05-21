@@ -1,0 +1,19 @@
+package Classes;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.TreeMap;
+import javax.xml.bind.JAXBException;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException, JAXBException {
+		
+		ArrayList<TreeMap<String,String>> phones = Scraper.getAllProducts();
+		
+		ArrayList<TreeMap> phondesRDF = wywoalc metode z Mobilephone generate modelS 
+		
+		String Path = "phonesListInXML.xml";
+		XMLHelper.WriteAllPhones(Path, phones);
+	}
+}

@@ -1,0 +1,238 @@
+package Classes;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.TreeMap;
+
+import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Statement;
+import org.eclipse.rdf4j.model.ValueFactory;
+import org.eclipse.rdf4j.model.util.ModelBuilder;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.model.impl.TreeModel;
+import org.eclipse.rdf4j.rio.RDFFormat;
+import org.eclipse.rdf4j.rio.Rio;
+
+import com.sun.javafx.stage.ScreenHelper.ScreenAccessor;
+
+public class MobilePhone {
+	
+	static private List<String> keyList;
+	
+	static public void SetKeyList()
+	{
+		keyList = new ArrayList<String>();
+		
+		keyList.add("Aparat_glowny");		
+		keyList.add("Bezprzewodowe_ladowanie");		
+		keyList.add("Bluetooth");		
+		keyList.add("Dual_SIM");		
+		keyList.add("GPS");		
+		keyList.add("GSM");		
+		keyList.add("Klawiatura_sprzetowa");		
+		keyList.add("LTE");		
+		keyList.add("MMS");		
+		keyList.add("Nazwa");		
+		keyList.add("Ochrona_wyswietlacza");		
+		keyList.add("Odtwarzacz_muzyki");		
+		keyList.add("Odtwarzacz_wideo");		
+		keyList.add("Procesor");		
+		keyList.add("Profile");		
+		keyList.add("Przedni_aparat");		
+		keyList.add("RSS");		
+		keyList.add("Radio");		
+		keyList.add("SMS");		
+		keyList.add("Slownik_SMS");		
+		keyList.add("System");		
+		keyList.add("Typ_SIM");		
+		keyList.add("Typ_urzadzenia");		
+		keyList.add("USB");		
+		keyList.add("Wyswietlacz_glowny");		
+		keyList.add("Zlacze_jack");
+		keyList.add("autofocus");
+		keyList.add("filmy");
+		keyList.add("flesz");
+		keyList.add("karta_pamieci");
+		keyList.add("karta_pamieci_-_max_wielkosc");
+		keyList.add("kolory");
+		keyList.add("rozdzielczosc");
+		keyList.add("typ_USB");
+		keyList.add("wielkosc");
+		keyList.add("wielkosc_pamieci_wbudowanej");
+		keyList.add("zoom_optyczny");
+	}
+	
+	static public List<Model> GeneratePhoneModels(ArrayList<TreeMap<String,String>> phonesTM)
+	{
+		List<Model> phonesRDF = new ArrayList<Model>();
+		
+		//for(TreeMap phoneTM : phonesTM)
+		//{
+		for(int i=0; i<phonesTM.size();i++)
+			phonesRDF.add(GeneratePhoneModel(phonesTM.get(i)));
+		//}
+		
+		return phonesRDF;
+	}
+	
+	static public Model GeneratePhoneModel(TreeMap<String,String> phoneTM)
+	{
+		ValueFactory vf = SimpleValueFactory.getInstance();
+		String ex  = vocabulary.NAMESPACE.toString();
+		
+		String objectName = phoneTM.get("Nazwa");
+		IRI phone = vf.createIRI(ex, objectName);
+		
+		String maincameraName = "Main Camera";
+		IRI maincamera = vf.createIRI(ex, maincameraName);
+		
+		String frontcameraName = "Front Camera";
+		IRI frontcamera = vf.createIRI(ex, frontcameraName);
+		
+		String systemName = "System";
+		IRI system = vf.createIRI(ex, systemName);
+		
+		String procesoName = "Procesor";
+		IRI procesor = vf.createIRI(ex, procesoName);
+		
+		String simName = "SIM";
+		IRI sim = vf.createIRI(ex, simName);
+		
+		String screenName = "Screen";
+		IRI screen = vf.createIRI(ex, screenName);
+		
+		Model RDFmodel = new TreeModel();
+		
+		for(String key : phoneTM.keySet())
+		{
+			switch(key)
+			{
+			
+				case "Nazwa":
+					String name = phoneTM.get(key);
+					String brand = name.split(" ",2)[0];
+					String model = name.split(" ",2)[1];
+					RDFmodel.add(phone, vocabulary.NAME, vf.createLiteral(name));
+					RDFmodel.add(phone, vocabulary.BRAND, vf.createLiteral(brand));
+					RDFmodel.add(phone, vocabulary.MODEL, vf.createLiteral(model));
+					break;
+					
+				case "Procesor":
+					if(phoneTM.get(key).contains("Qualcomm") || phoneTM.get(key).contains("Huawei") || phoneTM.get(key).contains("HiSilicon") || phoneTM.get(key).contains("ARM"))
+					{
+						RDFmodel.add(phone, vocabulary.HASGOT, procesor);
+						break;
+					}
+					
+					List<String> procesorSplit = Arrays.asList(phoneTM.get(key).split(", "));		
+					String ghzValue ="";
+					String mhzValue ="";
+					
+					for (String elem : procesorSplit){
+						
+						  if (elem.contains(" GHz")){
+							  ghzValue = elem;ghzValue = ghzValue.replace(" GHz","");
+								Float ghzcount = Float.parseFloat(ghzValue);
+								
+								RDFmodel.add(phone, vocabulary.HASGOT, procesor);
+								RDFmodel.add(procesor, vocabulary.TYPE, vf.createLiteral(procesorSplit.toArray()[0].toString()));
+								RDFmodel.add(procesor, vocabulary.GHZCOUNT, vf.createLiteral(ghzcount));
+								
+						  } else if (elem.contains(" MHz")){
+							  mhzValue = elem;
+							  mhzValue = mhzValue.replace(" MHz","");
+								Float mhzcount = Float.parseFloat(mhzValue);
+								
+								RDFmodel.add(phone, vocabulary.HASGOT, procesor);
+								RDFmodel.add(procesor, vocabulary.TYPE, vf.createLiteral(procesorSplit.toArray()[0].toString()));
+								RDFmodel.add(procesor, vocabulary.MHZCOUNT, vf.createLiteral(mhzcount));
+						  }
+						    
+					}
+					break;
+			
+				case "Aparat_glowny":
+					RDFmodel.add(phone, vocabulary.HASGOT, maincamera);
+					RDFmodel.add(maincamera, vocabulary.MPXCOUNT, vf.createLiteral(phoneTM.get(key)));
+					break;
+					
+				case "autofocus":
+				case "filmy":
+				case "flesz":
+				case "zoom_optyczny":
+					if(phoneTM.get(key) != "Nie")
+						RDFmodel.add(maincamera, vocabulary.HANDLING, vf.createLiteral(phoneTM.get(key)));
+					break;	
+				
+				case "Przedni_aparat":
+					RDFmodel.add(phone, vocabulary.HASGOT, frontcamera);
+					break;
+					
+				case "Typ_urzadzenia":
+					RDFmodel.add(phone, vocabulary.TYPE, vf.createLiteral(phoneTM.get(key)));
+					break;
+					 
+				case "System":
+					String systemSplit[] = phoneTM.get(key).split(" ",2);
+					RDFmodel.add(phone, vocabulary.SYSTEM, system);
+					RDFmodel.add(system, vocabulary.NAME, vf.createLiteral(systemSplit[0]));
+					//RDFmodel.add(system, vocabulary.VERSION, vf.createLiteral(systemSplit[1]));
+					break;
+				
+				case "Typ_SIM":
+					RDFmodel.add(phone, vocabulary.SYSTEM, sim);
+					RDFmodel.add(sim, vocabulary.TYPE, vf.createLiteral(phoneTM.get(key)));
+					RDFmodel.add(sim, vocabulary.MAXSIZE, vf.createLiteral(phoneTM.get("karta_pamieci_-_max_wielkosc")));
+					break;
+				
+				case "Wyswietlacz_glowny":
+					RDFmodel.add(phone, vocabulary.SYSTEM, screen);
+					RDFmodel.add(screen, vocabulary.TYPE, vf.createLiteral(phoneTM.get(key)));
+					RDFmodel.add(screen, vocabulary.SIZE, vf.createLiteral(phoneTM.get("wielkosc")));
+					RDFmodel.add(screen, vocabulary.COLORCOUNT, vf.createLiteral(phoneTM.get("kolory")));
+					RDFmodel.add(screen, vocabulary.RESOLUTION, vf.createLiteral(phoneTM.get("rozdzielczosc")));
+					break;
+					
+				case "Bezprzewodowe_ladowanie":
+				case "Bluetooth":
+				case "Dual_SIM":
+				case "GPS":
+				case "Klawiatura_sprzetowa":
+				case "LTE":
+				case "MMS":
+				case "Ochrona_wyswietlacza":
+				case "Odtwarzacz_muzyki":
+				case "Odtwarzacz_wideo":
+				case "Profile":
+				case "RSS":
+				case "Radio":
+				case "SMS":
+				case "Slownik_SMS":
+				case "Zlacze_jack":
+				case "GSM":
+				case "USB":
+					if(phoneTM.get(key) != "Nie")
+						RDFmodel.add(phone, vocabulary.SUPPORT, vf.createLiteral(key));
+					break;
+			
+				default:
+					break;
+			}
+		}	
+		return RDFmodel;
+	}
+	
+	static public void SaveToFile(String path, List<Model> phonesRDF) throws FileNotFoundException
+    {
+        FileOutputStream Fileout = new FileOutputStream(path);
+        for (Model elem : phonesRDF)
+            Rio.write(elem, Fileout, RDFFormat.RDFXML);
+    }
+
+}

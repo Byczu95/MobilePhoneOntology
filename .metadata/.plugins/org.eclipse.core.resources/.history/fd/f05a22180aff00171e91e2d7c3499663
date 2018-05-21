@@ -1,0 +1,71 @@
+package Classes;
+s
+import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.Namespace;
+import org.eclipse.rdf4j.model.ValueFactory;
+import org.eclipse.rdf4j.model.impl.SimpleNamespace;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+
+public class vocabulary {
+	
+	public vocabulary() {}
+	
+	public static final String NAMESPACE = "http://phoneOntology.en/relations/";
+	
+	public static final String PREFIX = "vocabulary";
+	
+	public static final Namespace NS = new SimpleNamespace(PREFIX, NAMESPACE);
+	
+	public static final IRI NAME;
+	
+	public static final IRI BRAND;
+	
+	public static final IRI MODEL;
+	
+	public static final IRI HASGOT;
+	
+	public static final IRI SIZE;
+	
+	public static final IRI MAXSIZE;
+	
+	public static final IRI COLORCOUNT;
+	
+	public static final IRI MPXCOUNT;
+	
+	public static final IRI GHZCOUNT;
+	
+	public static final IRI CAPACITY;
+	
+	public static final IRI SUPPORT;
+	
+	public static final IRI HANDLING;
+	
+	public static final IRI TYPE;
+	
+	public static final IRI SYSTEM;
+	
+	public static final IRI VERSION;
+	
+	public static final IRI RESOLUTION;
+	
+	static
+	{
+		ValueFactory factory = SimpleValueFactory.getInstance();
+		NAME	= factory.createIRI(NAMESPACE, "name");		// Pelna nazwa
+		BRAND	= factory.createIRI(NAMESPACE, "brand");	// Nazwa producenta
+		MODEL	= factory.createIRI(NAMESPACE, "model");	// Nazwa modelu
+		HASGOT	= factory.createIRI(NAMESPACE, "hasgot");	// Ma, jest wyposarzony w, jest zbudowany z
+		SIZE	= factory.createIRI(NAMESPACE, "size");	// rozmiar
+		COLORCOUNT	= factory.createIRI(NAMESPACE, "colorcount");	// ilosc kolorow
+		MPXCOUNT	= factory.createIRI(NAMESPACE, "mpxcount");	// ilosc megapixeli
+		CAPACITY	= factory.createIRI(NAMESPACE, "capacity");	// pojemnosc 
+		SUPPORT	= factory.createIRI(NAMESPACE, "support");	// wspiera technologie
+		HANDLING = factory.createIRI(NAMESPACE, "handling"); //obsluguje
+		TYPE = factory.createIRI(NAMESPACE, "type"); //typ
+		SYSTEM = factory.createIRI(NAMESPACE, "system"); //system
+		VERSION = factory.createIRI(NAMESPACE, "version"); //wersja
+		GHZCOUNT = factory.createIRI(NAMESPACE, "ghzcount"); //ilosc gigaherzow
+		MAXSIZE = factory.createIRI(NAMESPACE, "maxsize"); //maksymalny rozmiar
+		RESOLUTION = factory.createIRI(NAMESPACE, "resolution"); //rozdzielczosc
+	}
+}

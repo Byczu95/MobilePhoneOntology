@@ -1,0 +1,128 @@
+package Classes;
+
+import java.io.File;
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+
+import java.awt.*;
+import java.awt.event.*;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.rdf4j.model.Model;
+import com.hp.hpl.jena.rdf.model.*;
+import com.hp.hpl.jena.rdf.model.Literal;
+//import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.util.FileManager;
+
+public class app extends JFrame {
+	
+	private static String filePath = "";
+	
+	private static List<Model> modelList;
+	
+	public app() {
+		modelList = MobilePhone.GeneratePhoneModels(XMLHelper.ReadAllPhones("mobile-phone-ontology\\phonesListInXML.xml"));
+		
+		// Search group setup
+		JLabel label = new JLabel("Szukaj telefonu:");;
+        JTextField textField = new JTextField();
+        JButton findButton = new JButton("Szukaj");
+        
+        // Button listener for search
+        findButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String queryParm = textField.getText();
+        		
+        		dispose();
+        		
+        		new app(queryParm).setVisible(true);
+        	}
+        });
+
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+            .addComponent(label)
+            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                .addComponent(textField))
+            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                .addComponent(findButton))
+        );
+       
+        layout.setVerticalGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(label)
+                    .addComponent(textField)
+                    .addComponent(findButton))
+        );
+		
+		// Window settings
+		setTitle("Mobile Phone Ontology");
+		setSize(400, 300);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
+	
+	public app(String str) {	
+		// Search group setup
+		JLabel label = new JLabel("Szukaj telefonu:");;
+        JTextField textField = new JTextField();
+        JButton findButton = new JButton("Szukaj");
+
+        textField.setText(str);
+        
+        // Button listener for search
+        findButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String queryParm = textField.getText();
+        		
+        		dispose();
+        		
+        		new app(queryParm).setVisible(true);
+        	}
+        });
+        
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+            .addComponent(label)
+            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                .addComponent(textField))
+            .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                .addComponent(findButton))
+        );
+       
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                .addComponent(label)
+                .addComponent(textField)
+                .addComponent(findButton))
+        );
+		
+		// Fill data
+        
+        //modelList.
+        
+        //while(iter.hasNext()) {
+        //	Resource res = iter.nextResource();
+        //}
+		
+		// Window settings
+		setTitle("Mobile Phone Ontology");
+		setSize(400, 300);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
+	
+	public static void main(String[] args) {
+		new app().setVisible(true);
+	}
+}

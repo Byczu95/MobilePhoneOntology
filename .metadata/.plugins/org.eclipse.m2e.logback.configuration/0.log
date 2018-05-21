@@ -1,0 +1,12 @@
+2018-01-21 21:38:40,237 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-01-22 00:40:38,342 [Worker-57] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.example:rdf4j-getting-started:0.0.1-SNAPSHOT @ C:\Users\7\workspace\ZTI_Project\rdf4j-getting-started\pom.xml.
+2018-01-22 00:40:38,342 [Worker-58] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.example:rdf4j-getting-started:0.0.1-SNAPSHOT @ C:\Users\7\workspace\ZTI_Project\rdf4j-getting-started\pom.xml.
+2018-01-22 00:40:53,784 [Worker-58] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1250 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-01-22 00:40:53,911 [Worker-58] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2018-01-22 00:40:53,922 [Worker-58] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1250 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-01-22 00:40:53,924 [Worker-58] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2018-01-22 17:08:38,066 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-01-23 21:37:45,680 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2018-01-23 22:13:07,993 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-01-27 22:33:26,032 [Worker-14] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2018-01-28 17:12:40,496 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
